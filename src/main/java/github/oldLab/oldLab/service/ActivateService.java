@@ -37,7 +37,13 @@ public class ActivateService {
             throw new UserNotFoundException("OTP expired for phone number: " + request.getPhoneNumber());
         }
 
-        if (activation.getOtp() != request.getOtp()) {
+        int otpInt;
+        try {
+            otpInt = Integer.parseInt(request.getOtp());
+        } catch (NumberFormatException e) {
+            throw new UserNotFoundException("OTP must be a number for phone number: " + request.getPhoneNumber());
+        }
+        if (activation.getOtp() != otpInt) {
             throw new UserNotFoundException("invalid OTP for phone number: " + request.getPhoneNumber());
         }
 
@@ -107,7 +113,7 @@ public class ActivateService {
         sendOtp(phoneNumber, getOtp(phoneNumber));
     }
 
-    public AuthResponse login(String phoneNumber, int OTP) {
+    public AuthResponse login(String phoneNumber, String otp) {
         log.debug("logging by otp in user with phone number: {}", phoneNumber);
         Activate activation = repository.findByPhoneNumberAndIsLogin(phoneNumber, true)
             .orElseThrow(() -> new UserNotFoundException("users with phone number: " + phoneNumber + " not found, please send OTP first"));
@@ -115,7 +121,13 @@ public class ActivateService {
             throw new UserNotFoundException("OTP expired for phone number: " + phoneNumber);
         }
 
-        if (activation.getOtp() != OTP) {
+        int otpInt;
+        try {
+            otpInt = Integer.parseInt(otp);
+        } catch (NumberFormatException e) {
+            throw new UserNotFoundException("OTP must be a number for phone number: " + phoneNumber);
+        }
+        if (activation.getOtp() != otpInt) {
             throw new UserNotFoundException("invalid OTP for phone number: " + phoneNumber);
         }
 

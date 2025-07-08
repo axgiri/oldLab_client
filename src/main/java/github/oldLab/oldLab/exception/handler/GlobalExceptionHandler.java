@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import github.oldLab.oldLab.exception.UserNotFoundException;
+import github.oldLab.oldLab.exception.InvalidTokenException;
+import github.oldLab.oldLab.exception.InvalidPasswordException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -41,6 +43,30 @@ public class GlobalExceptionHandler {
             errors
         );
         return ResponseEntity.badRequest().body(err);
+    }
+
+    // [Tais0ft & axgiri]: Обработка ошибок с невалидным токеном, чтобы возвращать UNAUTHORIZED и единый формат ошибки
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ApiError> onInvalidToken(InvalidTokenException ex) {
+        ApiError err = new ApiError(
+            Instant.now(),
+            "INVALID_TOKEN",
+            ex.getMessage(),
+            null
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
+    }
+
+    // [Tais0ft & axgiri]: Обработка ошибок с невалидным паролем, чтобы возвращать BAD_REQUEST и единый формат ошибки
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<ApiError> onInvalidPassword(InvalidPasswordException ex) {
+        ApiError err = new ApiError(
+            Instant.now(),
+            "INVALID_PASSWORD",
+            ex.getMessage(),
+            null
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
     @ExceptionHandler(Exception.class)
