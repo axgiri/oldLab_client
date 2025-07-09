@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import github.oldLab.oldLab.dto.request.ActivateRequest;
 import github.oldLab.oldLab.dto.response.AuthResponse;
-import github.oldLab.oldLab.service.ActivateService;
+import github.oldLab.oldLab.serviceImpl.ActivateServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/v1/activate")
 public class ActivateController {
     
-    public final ActivateService service;
+    public final ActivateServiceImpl service;
 
     @PostMapping("/activate")
     public ResponseEntity<Void> activate(@RequestBody ActivateRequest request){

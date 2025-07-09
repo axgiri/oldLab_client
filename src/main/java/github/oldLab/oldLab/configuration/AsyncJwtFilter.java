@@ -20,22 +20,23 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import github.oldLab.oldLab.service.TokenService;
+import github.oldLab.oldLab.serviceImpl.TokenServiceImpl;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class AsyncJwtFilter extends OncePerRequestFilter {
 
-    private final TokenService tokenService;
+    private final TokenServiceImpl tokenService;
     private final UserDetailsService userDetailsService;
     private final Executor asyncExecutor;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String header = request.getHeader("Authorization");
         String jwt = header.substring(7);
