@@ -1,5 +1,8 @@
 package github.oldLab.oldLab.entity;
 
+import java.util.List;
+
+import github.oldLab.oldLab.Enum.CategoryEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,12 +13,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 @Table(name = "shops")
 public class Shop {
     
@@ -36,5 +41,5 @@ public class Shop {
 
     private String description;
 
-    private String category;
+    private List<CategoryEnum> category;
 }
