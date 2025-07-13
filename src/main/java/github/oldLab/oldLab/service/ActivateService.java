@@ -58,7 +58,7 @@ public class ActivateService {
 
     public int setOtp() {
         log.debug("generating otp");
-        return new Random().nextInt(9999);
+        return new Random().nextInt(9000) + 1000;
     }
 
     public void save(String phoneNumber, Optional<Boolean> isLogin) {

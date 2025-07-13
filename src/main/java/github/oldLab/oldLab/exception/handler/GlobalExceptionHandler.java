@@ -45,7 +45,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(err);
     }
 
-    // [Tais0ft & axgiri]: Обработка ошибок с невалидным токеном, чтобы возвращать UNAUTHORIZED и единый формат ошибки
     @ExceptionHandler(InvalidTokenException.class)
     public ResponseEntity<ApiError> onInvalidToken(InvalidTokenException ex) {
         ApiError err = new ApiError(
@@ -57,7 +56,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
     }
 
-    // [Tais0ft & axgiri]: Обработка ошибок с невалидным паролем, чтобы возвращать BAD_REQUEST и единый формат ошибки
     @ExceptionHandler(InvalidPasswordException.class)
     public ResponseEntity<ApiError> onInvalidPassword(InvalidPasswordException ex) {
         ApiError err = new ApiError(

@@ -3,7 +3,6 @@ package github.oldLab.oldLab;
 import github.oldLab.oldLab.dto.request.PersonRequest;
 import github.oldLab.oldLab.entity.Person;
 import github.oldLab.oldLab.exception.UserNotFoundException;
-import github.oldLab.oldLab.mapper.PersonMapper;
 import github.oldLab.oldLab.repository.PersonRepository;
 import github.oldLab.oldLab.service.ActivateService;
 import github.oldLab.oldLab.service.PersonService;
@@ -29,7 +28,6 @@ class PersonServiceTest {
     @Mock TokenService tokenService;
     @Mock ActivateService activateService;
     @Mock TaskExecutor taskExecutor;
-    @Mock PersonMapper personMapper;
 
     @InjectMocks PersonService personService;
 
@@ -41,7 +39,7 @@ class PersonServiceTest {
     @Test
     void create_throwsIfPhoneExists() {
         PersonRequest req = new PersonRequest();
-        req.setPhoneNumber("+79998887766");
+        req.setPhoneNumber("+61123456789");
         when(repository.findByPhoneNumber(anyString())).thenReturn(Optional.of(new Person()));
         assertThrows(UserNotFoundException.class, () -> personService.create(req));
     }

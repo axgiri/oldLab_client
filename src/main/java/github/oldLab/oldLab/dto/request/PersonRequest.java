@@ -11,36 +11,40 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PersonRequest {
 
-    @Schema(description = "Имя пользователя") // [Tais0ft & axgiri]: Описание для Swagger
-    @NotNull(message = "first name cannot be null") // [Tais0ft & axgiri]: Валидация — имя обязательно
-    @Size(min = 2, max = 32, message = "first name must be between 2 and 32 characters") // [Tais0ft & axgiri]: Валидация — длина имени
+    @NotNull(message = "first name cannot be null")
+    @Size(min = 2, max = 32, message = "first name must be between 2 and 32 characters")
     private String firstName;
     
-    @Schema(description = "Фамилия пользователя") // [Tais0ft & axgiri]: Описание для Swagger
-    @NotNull(message = "last name cannot be null") // [Tais0ft & axgiri]: Валидация — фамилия обязательна
-    @Size(min = 2, max = 32, message = "last name must be between 2 и 32 characters") // [Tais0ft & axgiri]: Валидация — длина фамилии
+    @NotNull(message = "last name cannot be null")
+    @Size(min = 2, max = 32, message = "last name must be between 2 and 32 characters")
     private String lastName;
 
-    @Schema(description = "Номер телефона пользователя") // [Tais0ft & axgiri]: Описание для Swagger
-    @NotNull(message = "phone number cannot be null") // [Tais0ft & axgiri]: Валидация — телефон обязателен
-    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "phone number must be valid") // [Tais0ft & axgiri]: Валидация — формат телефона
+    @NotNull(message = "phone number cannot be null")
+    @Pattern(regexp = "^\\+[1-9]\\d{1,14}$", message = "phone number must be valid")
     private String phoneNumber;
 
-    @Schema(description = "Пароль пользователя") // [Tais0ft & axgiri]: Описание для Swagger
-    @NotNull(message = "password cannot be null") // [Tais0ft & axgiri]: Валидация — пароль обязателен
-    @Size(min = 6, max = 64, message = "password must be between 6 and 64 characters") // [Tais0ft & axgiri]: Валидация — длина пароля
+    @NotNull(message = "password cannot be null")
+    @Size(min = 6, max = 32, message = "password must be between 6 and 32 characters")
     private String password;
 
-    @Schema(description = "Роль пользователя") // [Tais0ft & axgiri]: Описание для Swagger
     private RoleEnum role;
 
-    @Schema(description = "Активен ли пользователь") // [Tais0ft & axgiri]: Описание для Swagger
     private boolean isActive;
+
+    public Person toEntity() {
+        return new Person()
+            .setFirstName(firstName)
+            .setLastName(lastName)
+            .setPhoneNumber(phoneNumber)
+            .setPassword(password)
+            .setRoleEnum(role)
+            .setCreatedAt(LocalDate.now())
+            .setUpdatedAt(LocalDate.now());
+    }
 }
 

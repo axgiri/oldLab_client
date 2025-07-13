@@ -1,42 +1,28 @@
 # OldLab API
 
-## Описание
-REST API для управления пользователями и активацией аккаунтов. Документация и разработка: **Tais0ft** & **Axgiri**
+## How to Run the Project
 
-## Запуск проекта
-
-1. Установите JDK 17+ и Maven 3.8+
-2. Соберите проект:
+1. Install JDK 21+ and Maven 3.8+
+2. Build the project:
    ```bash
    mvn clean install
    ```
-3. Запустите приложение:
+3. Run the application:
    ```bash
    mvn spring-boot:run
    ```
 
-## Swagger UI
+## Main Endpoints
 
-После запуска перейдите по адресу:
-- [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-- или [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+### Person (PersonController)
+- `POST /api/v1/persons/signup` — user registration
+- `POST /api/v1/persons/login` — authentication
+- `GET /api/v1/persons/findById/{id}` — find by ID
+- `GET /api/v1/persons/getMyColleagues` — get colleagues (paginated)
+- and others.
 
-Вся документация и примеры запросов доступны в Swagger UI.
-
-## Основные эндпоинты
-
-### Пользователь (PersonController)
-- `POST /api/v1/persons/signup` — регистрация пользователя
-- `POST /api/v1/persons/login` — аутентификация
-- `GET /api/v1/persons/findById/{id}` — поиск по ID
-- `GET /api/v1/persons/getMyColleagues` — получить коллег (пагинация)
-- и др.
-
-### Активация (ActivateController)
-- `POST /api/v1/activate/activate` — активация аккаунта по OTP
-- `POST /api/v1/activate/send/activate/{phoneNumber}` — отправка OTP
-- `POST /api/v1/activate/login` — вход по OTP
-- и др.
-
-## Автор
-Tais0ft & Axgiri
+### Activation (ActivateController)
+- `POST /api/v1/activate/activate` — account activation via OTP
+- `POST /api/v1/activate/send/activate/{phoneNumber}` — send OTP
+- `POST /api/v1/activate/login` — login via OTP
+- and others.
