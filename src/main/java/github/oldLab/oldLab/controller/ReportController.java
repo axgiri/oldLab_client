@@ -26,53 +26,44 @@ public class ReportController {
 
     @PostMapping("/create")
     public ResponseEntity<Void> createReport(
+<<<<<<< Updated upstream
+            @RequestBody ReportRequest request) {
+=======
             @RequestBody ReportRequest request,
             HttpServletRequest httpRequest) {
-        String ip = httpRequest.getRemoteAddr();
-        Bucket bucket = rateLimiterService.resolveBucket(ip);
-        if (bucket.tryConsume(1)) {
-            log.debug("creating report: {}", request);
-            service.createReport(request);
-            return ResponseEntity.ok().build();
-        } else {
-            log.warn("rate limit exceeded for IP: {}", ip);
-            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
-        }
+        log.debug("creating report: {}", request);
+>>>>>>> Stashed changes
+        service.createReport(request);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
     public ResponseEntity<List<ReportResponse>> getAllReports(
             @RequestParam(defaultValue = "0") int page,
+<<<<<<< Updated upstream
+            @RequestParam(defaultValue = "20") int size) {
+=======
             @RequestParam(defaultValue = "20") int size,
             HttpServletRequest httpRequest) {
-        String ip = httpRequest.getRemoteAddr();
-        Bucket bucket = rateLimiterService.resolveBucket(ip);
-        if (bucket.tryConsume(1)) {
-            log.debug("getting all reports page: {}, size: {}", page, size);
-            List<ReportResponse> responses = service.getAllReports(page, size);
-            return ResponseEntity.ok(responses);
-        } else {
-            log.warn("rate limit exceeded for IP: {}", ip);
-            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
-        }
+        log.debug("getting all reports page: {}, size: {}", page, size);
+>>>>>>> Stashed changes
+        List<ReportResponse> responses = service.getAllReports(page, size);
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/status/{status}")
     public ResponseEntity<List<ReportResponse>> getReportsByStatus(
             @PathVariable ReportStatusEnum status,
             @RequestParam(defaultValue = "0") int page,
+<<<<<<< Updated upstream
+            @RequestParam(defaultValue = "20") int size) {
+=======
             @RequestParam(defaultValue = "20") int size,
             HttpServletRequest httpRequest) {
-        String ip = httpRequest.getRemoteAddr();
-        Bucket bucket = rateLimiterService.resolveBucket(ip);
-        if (bucket.tryConsume(1)) {
-            log.debug("getting reports by status: {} page: {}, size: {}", status, page, size);
-            List<ReportResponse> responses = service.getReportsByStatus(status, page, size);
-            return ResponseEntity.ok(responses);
-        } else {
-            log.warn("rate limit exceeded for IP: {}", ip);
-            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
-        }
+        log.debug("getting reports by status: {} page: {}, size: {}", status, page, size);
+>>>>>>> Stashed changes
+        List<ReportResponse> responses = service.getReportsByStatus(status, page, size);
+        return ResponseEntity.ok(responses);
     }
 
     @PatchMapping("/{reportId}/status")
@@ -80,17 +71,14 @@ public class ReportController {
     public ResponseEntity<Void> updateReportStatus(
             @PathVariable Long reportId,
             @RequestParam ReportStatusEnum status,
+<<<<<<< Updated upstream
+            @RequestHeader("X-Moderator-Id") Long moderatorId) {
+=======
             @RequestHeader("X-Moderator-Id") Long moderatorId,
             HttpServletRequest httpRequest) {
-        String ip = httpRequest.getRemoteAddr();
-        Bucket bucket = rateLimiterService.resolveBucket(ip);
-        if (bucket.tryConsume(1)) {
-            log.debug("updating report {} status to {} by moderator {}", reportId, status, moderatorId);
-            service.updateReportStatus(reportId, status, moderatorId);
-            return ResponseEntity.ok().build();
-        } else {
-            log.warn("rate limit exceeded for IP: {}", ip);
-            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
-        }
+        log.debug("updating report {} status to {} by moderator {}", reportId, status, moderatorId);
+>>>>>>> Stashed changes
+        service.updateReportStatus(reportId, status, moderatorId);
+        return ResponseEntity.ok().build();
     }
 }
