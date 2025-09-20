@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import github.oldLab.oldLab.dto.request.ActivateRequest;
 import github.oldLab.oldLab.dto.response.AuthResponse;
 import github.oldLab.oldLab.serviceImpl.ActivateServiceImpl;
-import github.oldLab.oldLab.serviceImpl.RateLimiterServiceImpl;
-import io.github.bucket4j.Bucket;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,58 +23,37 @@ import jakarta.validation.Valid;
 public class ActivateController {
     
     private final ActivateServiceImpl service;
-    private final RateLimiterServiceImpl rateLimiterService;
 
     @PostMapping("/activate")
-<<<<<<< Updated upstream
-    public ResponseEntity<Void> activate(@Valid @RequestBody ActivateRequest request){
-=======
     public ResponseEntity<Void> activate(@Valid @RequestBody ActivateRequest request, HttpServletRequest httpRequest){
->>>>>>> Stashed changes
         log.debug("activating account with phone number: {}", request.getPhoneNumber());
         service.setActive(request);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/send/activate/{phoneNumber}")
-<<<<<<< Updated upstream
-    public ResponseEntity<Void> sendOtp(@PathVariable String phoneNumber){
-=======
     public ResponseEntity<Void> sendOtp(@PathVariable String phoneNumber, HttpServletRequest httpRequest){
->>>>>>> Stashed changes
         log.debug("sending OTP to phone number: {}", phoneNumber);
         service.sendOtp(phoneNumber);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @PostMapping("/resend/activate/{phoneNumber}")
-<<<<<<< Updated upstream
-    public ResponseEntity<Void> resendOtp(@PathVariable String phoneNumber){
-=======
     public ResponseEntity<Void> resendOtp(@PathVariable String phoneNumber, HttpServletRequest httpRequest){
->>>>>>> Stashed changes
         log.debug("resending OTP to phone number: {}", phoneNumber);
         service.resendOtp(phoneNumber);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @PostMapping("/login")
-<<<<<<< Updated upstream
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody ActivateRequest request){
-=======
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody ActivateRequest request, HttpServletRequest httpRequest){
->>>>>>> Stashed changes
         log.debug("logging in user with phone number: {}", request.getPhoneNumber());
         AuthResponse response = service.login(request.getPhoneNumber(), request.getOtp());
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/send/login/{phoneNumber}")
-<<<<<<< Updated upstream
-    public ResponseEntity<Void> sendLoginOtp( @PathVariable String phoneNumber) {
-=======
     public ResponseEntity<Void> sendLoginOtp(@PathVariable String phoneNumber, HttpServletRequest httpRequest) {
->>>>>>> Stashed changes
         log.debug("sending login OTP to phone number: {}", phoneNumber);
         service.sendLoginOtp(phoneNumber);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
